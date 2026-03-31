@@ -1048,7 +1048,10 @@ async function toggleAudio() {
       audioSrc = audioCache[text];
     } else {
       // 🔥 2. CACHE EN LOCALSTORAGE
-      const saved = localStorage.getItem("tts_" + text);
+      
+      const key = "toefl_listening_audio";
+      
+const saved = localStorage.getItem(key);
       if (saved) {
         audioSrc = saved;
       } else {
