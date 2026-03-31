@@ -773,6 +773,7 @@ let answers = { reading: {}, listening: {}, writing: { text: '', wordCount: 0 } 
 let scores   = { reading: 0, listening: 0, writing: 0 };
 let sectionTimes = { reading: 0, listening: 0, writing: 0 };
 let speaking = false;
+let currentAudio = null; 
 let transcriptShown = false;
 
 // ════════════════════════════════════════════════════
@@ -1078,7 +1079,7 @@ const saved = localStorage.getItem(key);
 
         // guardar cache
         audioCache[text] = audioSrc;
-        localStorage.setItem("tts_" + text, audioSrc);
+        localStorage.setItem(key, audioSrc);
       }
     }
 
