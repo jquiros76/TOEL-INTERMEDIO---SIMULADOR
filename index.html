@@ -1030,7 +1030,12 @@ const audioCache = {};
 async function toggleAudio() {
   const btn = document.getElementById('ap-play-btn');
   const eqs = document.querySelectorAll('.eq-bar');
-  const text = EXAM.listening.audio.transcript;
+  const text = EXAM.listening.audio.transcript;]
+
+  if (currentAudio) {
+  currentAudio.pause();
+  currentAudio.currentTime = 0;
+}
 
   if (speaking) {
     speaking = false;
@@ -1077,21 +1082,21 @@ const saved = localStorage.getItem(key);
       }
     }
 
-    const audio = new Audio(audioSrc);
+    currentAudio = new Audio(audioSrc);
 
     speaking = true;
     btn.textContent = '⏹';
     btn.classList.add('playing');
     eqs.forEach(e => e.classList.add('active'));
 
-    audio.onended = () => {
+    currentAudio.onended = () => {
       speaking = false;
       btn.textContent = '▶';
       btn.classList.remove('playing');
       eqs.forEach(e => e.classList.remove('active'));
     };
 
-    audio.play();
+    currentAudio.play();
 
   } catch (err) {
     console.error("TTS error:", err);
