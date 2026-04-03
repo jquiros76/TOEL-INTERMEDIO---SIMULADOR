@@ -50,7 +50,7 @@ exports.handler = async (event) => {
         "Access-Control-Allow-Origin": "*"
       },
       body: JSON.stringify({
-        audio: `data:audio/mp3;base64,${base64}`
+        audio: `data:audio/mpeg;base64,${base64}`
       })
     };
 
