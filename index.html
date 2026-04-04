@@ -1034,9 +1034,9 @@ async function toggleAudio() {
   const text = EXAM.listening.audio.transcript;
 
   if (currentAudio) {
-  currentAudio.pause();
-  currentAudio.currentTime = 0;
-}
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
 
   if (speaking) {
     speaking = false;
@@ -1048,6 +1048,50 @@ async function toggleAudio() {
 
   try {
     let audioSrc;
+    const key = "tts_" + btoa(text).slice(0,50);
+
+    const saved = localStorage.getItem(key);
+
+    if (saved) {
+      audioSrc = saved;
+    } else {
+      const res = await fetch('/.netlify/functions/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      });
+
+      const data = await res.json();
+
+      if (!data.audio || !data.audio.startsWith("data:audio")) {
+        console.error("Audio inválido:", data);
+        return;
+      }
+
+      audioSrc = data.audio;
+      localStorage.setItem(key, audioSrc);
+    }
+
+    currentAudio = new Audio(audioSrc);
+
+    speaking = true;
+    btn.textContent = '⏹';
+    btn.classList.add('playing');
+    eqs.forEach(e => e.classList.add('active'));
+
+    currentAudio.onended = () => {
+      speaking = false;
+      btn.textContent = '▶';
+      btn.classList.remove('playing');
+      eqs.forEach(e => e.classList.remove('active'));
+    };
+
+    await currentAudio.play();
+
+  } catch (err) {
+    console.error("TTS error:", err);
+  }
+}
 
     // 🔥 1. CACHE EN MEMORIA
     if (audioCache[text]) {
@@ -1097,7 +1141,7 @@ const saved = localStorage.getItem(key);
       eqs.forEach(e => e.classList.remove('active'));
     };
 
-    currentAudio.play();
+    await currentAudio.play();
 
   } catch (err) {
     console.error("TTS error:", err);
