@@ -35,7 +35,7 @@ exports.handler = async (event) => {
       body: JSON.stringify({
         model: "gpt-4o-mini-tts",
         input: text,
-        voice: "nova",
+        voice: "alloy",
         format: "mp3"
       })
     });
