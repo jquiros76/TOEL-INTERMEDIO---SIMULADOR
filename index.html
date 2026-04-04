@@ -1102,7 +1102,7 @@ currentAudio.onended = () => {
   eqs.forEach(e => e.classList.remove('active'));
 };
 
-await currentAudio.play();
+currentAudio.play();
 ```
 
 } catch (err) {
@@ -1456,8 +1456,13 @@ function retakeExam() {
   speechSynthesis.cancel(); speaking = false;
   goToSection(0);
 }
+function goSection(sec){
+if(sec === 'reading') renderReading();
+if(sec === 'listening') renderListening();
+if(sec === 'writing') renderWriting();
+startTimer(sec);
+}
 
-speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
 </script>
 </body>
 </html>
