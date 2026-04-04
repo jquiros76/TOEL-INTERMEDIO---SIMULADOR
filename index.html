@@ -1454,7 +1454,7 @@ function retakeExam() {
   timers  = {};
   transcriptShown = false;
   speechSynthesis.cancel(); speaking = false;
-  goToSection(0);
+  goToSection('reading');
 }
 function goSection(sec){
 if(sec === 'reading') renderReading();
@@ -1462,6 +1462,10 @@ if(sec === 'listening') renderListening();
 if(sec === 'writing') renderWriting();
 startTimer(sec);
 }
+  function goToSection(sec){
+goSection(sec);
+}
+
 
 </script>
 </body>
