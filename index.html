@@ -1026,10 +1026,6 @@ function updateWritingRubric(words, text) {
   });
 }
 
-const audioCache = {};
-let speaking = false;
-let currentAudio = null;
-
 async function toggleAudio() {
 const btn = document.getElementById('ap-play-btn');
 const eqs = document.querySelectorAll('.eq-bar');
