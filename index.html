@@ -775,6 +775,18 @@ let sectionTimes = { reading: 0, listening: 0, writing: 0 };
 var speaking = false;
 var currentAudio = null; 
 let transcriptShown = false;
+  
+  function goSection(sec){
+if(sec === 'reading') renderReading();
+if(sec === 'listening') renderListening();
+if(sec === 'writing') renderWriting();
+startTimer(sec);
+}
+
+function goToSection(sec){
+goSection(sec);
+}
+
 
 // ════════════════════════════════════════════════════
 //  NAVIGATION
@@ -1159,7 +1171,7 @@ const saved = localStorage.getItem(key);
       eqs.forEach(e => e.classList.remove('active'));
     };
 
-    await currentAudio.play();
+    currentAudio.play();
 
   } catch (err) {
     console.error("TTS error:", err);
